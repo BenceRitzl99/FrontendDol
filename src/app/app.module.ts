@@ -14,6 +14,9 @@ import { TranslatePipe } from './translate.pipe';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { RouterModule } from '@angular/router';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+
 
 
 @NgModule({
@@ -24,7 +27,8 @@ import { RouterModule } from '@angular/router';
     ProductComponent,
     TranslatePipe,
     ProductAddComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,10 @@ import { RouterModule } from '@angular/router';
     NgbModule,
     FormsModule,
     TranslateModule,
-    RouterModule.forRoot([]),
+    RouterModule,
+    AngularFireModule,
+    AngularFireDatabaseModule,
+    
   
   ],
   providers: [

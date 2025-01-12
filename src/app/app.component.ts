@@ -1,37 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './product.service';
 import { TranslateService } from './translate.service';
+import { Product } from './models/product.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  products: any[] = [];
+  products: Product[] = [];
+  
   
   
 
-  constructor(private ProductService: ProductService, private TranslateService: TranslateService){
-    this.TranslateService.setLanguage('en');
+  constructor(private productService: ProductService, private translateService: TranslateService){
+    this.translateService.setLanguage('en');
   }
 
   ngOnInit(): void {
-    this.ProductService.getAllProducts().subscribe(data => {
-      
+    this.productService.getAllProducts().subscribe((product: Product[]) => {
+      console.log(product);
+    });
 
-      this.products = Object.keys(data).map(key => {
-        return {id: key, ...data};
+    this.productService.addProduct({name: 'New Product', description: 'New Product Description', price: 100}).subscribe(response => {
+      console.log(response);
+    });
 
-      });
-      
-      
-      
-    })
+    this.productService.updateProduct('1', {name: 'New Product', description: 'New Product Description', price: 100}).subscribe(response => {
+      console.log(response);
+    });
+
+    this.productService.deleteProduct('1').subscribe(response => {
+      console.log(response);
+    });
   }
 
+
+
+
+
+
+      
+
   onLangChange(lang: String) {
-    this.TranslateService.setLanguage(lang);
+    this.translateService.setLanguage(lang);
     
   }
   title = 'dolgozat';

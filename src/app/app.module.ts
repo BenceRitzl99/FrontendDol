@@ -16,7 +16,7 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { environments } from '../app/environments';
+
 
 
 
@@ -39,7 +39,7 @@ import { environments } from '../app/environments';
     FormsModule,
     TranslateModule,
     RouterModule,
-    AngularFireModule.initializeApp(environments.firebaseConfig),
+    AngularFireModule,
     AngularFireDatabaseModule,
     
     

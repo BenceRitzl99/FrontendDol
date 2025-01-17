@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { BaseService } from '../base.service';
+import { ProductService } from '../product.service';
 import { TranslateService } from '../translate.service';
 
 @Component({
@@ -10,15 +10,13 @@ import { TranslateService } from '../translate.service';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private base: BaseService, private translate: TranslateService) {
+  constructor(private productService: ProductService, private translate: TranslateService) {
     
-    this.translate.setLanguage('en');
+    
     
   }
 
-  languagechange(lang: string): void {
-    this.translate.setLanguage(lang);
-  }
+
   
   products : any
 
@@ -30,32 +28,32 @@ export class ProductComponent implements OnInit {
     {key: "price", title:"PRICE", type:"number"},
   ]
 
-  newData: any = []
+  newProduct: any = []
 
   ngOnInit() {
       this.loadAllProducts();
   }
 
   loadAllProducts() {
-    this.products.getAllProducts().subscribe((product: any) => {
+    this.productService.getAllProducts().subscribe((product: any) => {
       this.products = product ? Object.entries(product).map(([key, value]: any) => ({ ...value, id: key })) : []
     })
   }
 
-  addData() {
-    this.products.createProduct(this.products).subscribe(() => {
+  addProduct() {
+    this.newProduct.createProduct(this.newProduct).subscribe(() => {
       this.loadAllProducts();
-      this.products = { id: null, name: '', category: '', description: '', price: null }
+      this.newProduct = { id: null, name: '', category: '', description: '', price: null }
     })
   }
 
-  updateData(data: any) {
-    this.products.price = parseFloat(data.price).toFixed(2)
-    this.products.updateProduct(data).subscribe(() => this.loadAllProducts())
+  updateProduct(product: any, id: string) {
+    product.price = parseFloat(product.price).toFixed(2)
+    this.productService.updateProduct(product, id).subscribe(() => this.loadAllProducts())
   }
 
   deleteProduct(product: {id: string}) {
-    this.products.deleteProduct(product.id).subscribe(() => this.loadAllProducts())
+    this.productService.deleteProduct(product.id).subscribe(() => this.loadAllProducts())
   }
 }
 

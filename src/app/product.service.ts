@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+
+
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class ProductService {
   private apiUrl = 'https://dolgozat-79584-default-rtdb.europe-west1.firebasedatabase.app';
-  private dataSubject = new Subject();
+  private productSubject = new Subject();
 
 
   constructor(private http: HttpClient) { }
@@ -24,7 +24,7 @@ export class ProductService {
     return this.http.post(`${this.apiUrl}/.json`, product);
   }
 
-  updateProduct(id: string, product: any): Observable<any> {
+  updateProduct(id: string, product: any) {
     product.price = parseFloat(product.price).toFixed(2);
     return this.http.put(`${this.apiUrl}/${product.id}.json`, product)
   }
